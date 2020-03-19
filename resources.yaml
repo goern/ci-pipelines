@@ -62,3 +62,13 @@ spec:
   params:
     - name: url
       value: quay.io/thoth-station/s2i-thoth-ubi8-py36:v0.11.3
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: s2i-python36
+spec:
+  type: image
+  params:
+    - name: url
+      value: registry.access.redhat.com/ubi8/python-36
