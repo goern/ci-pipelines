@@ -1,0 +1,20 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: build-minimal-jupyter-hub-image
+  namespace: thoth-ci-prod
+spec:
+  serviceAccountName: thoth-ci
+  pipelineRef:
+    name: build-jupyter-hub-image
+  resources:
+    - name: builder-image
+      resourceRef:
+        name: s2i-thoth-ubi8-py36
+    - name: source
+      resourceRef:
+        name: s2i-thoth-minimal-notebook-source
+    - name: image
+      resourceRef:
+        name: jupyter-hub-minimal-notebook-image

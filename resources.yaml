@@ -1,0 +1,64 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: s2i-thoth-minimal-notebook-source
+spec:
+  type: git
+  params:
+    - name: revision
+      value: experimental
+    - name: url
+      value: https://github.com/CermakM/jupyter-notebooks
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: source-git
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/4n4nd/prometheus-anomaly-detection-workshop
+    - name: reference
+      value: prometheus-api-client-katacoda
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: prometheus-anomaly-detection-workshop
+spec:
+  type: image
+  params:
+    - name: url
+      value: docker-registry.default.svc:5000/thoth-ci-prod/prometheus-anomaly-detection-workshop
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: jupyter-hub-minimal-notebook-image
+spec:
+  type: image
+  params:
+    - name: url
+      value: docker-registry.default.svc:5000/thoth-ci-prod/jupyter-hub-minimal-notebook-image
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: s2i-thoth-f31-py37
+spec:
+  type: image
+  params:
+    - name: url
+      value: quay.io/thoth-station/s2i-thoth-f31-py37:v0.11.3
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: s2i-thoth-ubi8-py36
+spec:
+  type: image
+  params:
+    - name: url
+      value: quay.io/thoth-station/s2i-thoth-ubi8-py36:v0.11.3
