@@ -28,26 +28,12 @@ spec:
         type: image
   steps:
     - command:
-        - /usr/local/bin/s2i
-        - --loglevel=$(inputs.params.LOGLEVEL)
-        - build
-        - $(inputs.params.PATH_CONTEXT)
-        - $(inputs.resources.builder-image.url)
-        - --as-dockerfile
-        - /gen-source/Dockerfile.gen
-      image: quay.io/openshift-pipeline/s2i:nightly
-      name: generate
-      volumeMounts:
-        - mountPath: /gen-source
-          name: gen-source
-      workingDir: /workspace/source
-    - command:
         - buildah
         - bud
         - --tls-verify=$(inputs.params.TLSVERIFY)
         - --layers
         - -f
-        - /gen-source/Dockerfile.gen
+        - Dockerfile
         - -t
         - $(outputs.resources.image.url)
         - .
@@ -58,9 +44,7 @@ spec:
       volumeMounts:
         - mountPath: /var/lib/containers
           name: varlibcontainers
-        - mountPath: /gen-source
-          name: gen-source
-      workingDir: /gen-source
+      workingDir: /workspace/source/minimal-notebook
     - command:
         - buildah
         - push
